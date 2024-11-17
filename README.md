@@ -1,10 +1,11 @@
-# RR-Team-35-yadtq-yet-another-distributed-task-queue-
+# Yet Another Distributed Task Queue
+## An implementation using Apache Kafka
 
-## Client
+### Client
 * Client interacts with YADTQ via a FastAPI-backed GUI
 * Client can submit and monitor tasks
 
-## Producer 
+### Producer 
 * To run from CLI - "tail -f a_tasks.txt | python3 producer.py \<topic\> \<number of partitions in topic\>"
 * Tasks with details like Task ID, Task Type, Task Arguments, Task Tries are written to a text file
 * Producer publishes every task to the topic
@@ -12,7 +13,7 @@
 * Task is recorded in Redis datastore with Task ID, Task Status = 'QUEUED', number of attempts made to execute = 0
 * "end" input from text file signals end of tasks in queue - all processes exit
 
-## Failure-Prone Consumer
+### Failure-Prone Consumer
 * To run from CLI - "python3 consumer.py \<consumer name\> \<topic\>"
 * Each consumer is part of consumer group 'workers', subscribed to topic
 * Executes tasks only in its assigned partition
@@ -25,7 +26,7 @@
 * Alternatively, Ctrl + C may also be applied to kill consumer process from CLI
 * Kafka's load-balancing mechanism reassigns tasks to stand-by or active consumer.
 
-## Guarantee Stand-by Consumer (Optional)
+### Guarantee Stand-by Consumer (Optional)
 * To run from CLI - "python3 guarantee_consumer.py \<consumer name\> \<topic\>
 * This consumer will not fail - done only to show that partitions of failed consumers are assigned to this (can be seen in terminal output)
 * Implemented for our understanding
